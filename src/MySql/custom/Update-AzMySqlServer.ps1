@@ -15,28 +15,27 @@
 
 function Update-AzMySqlServer {
     [OutputType([Microsoft.Azure.PowerShell.Cmdlets.MySql.Models.Api20171201Preview.IServer])]
-    [CmdletBinding(DefaultParameterSetName='UpdateExpanded', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
+    [CmdletBinding(DefaultParameterSetName='ServerName', PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
     [Microsoft.Azure.PowerShell.Cmdlets.MySql.Description('Updates an existing server. The request body can contain one to many of the properties present in the normal server definition.')]
-    [Microsoft.Azure.PowerShell.Cmdlets.MySql.Profile('latest-2019-04-30')]
     param(
-        [Parameter(ParameterSetName='UpdateExpanded', Mandatory, HelpMessage='The name of the server.')]
+        [Parameter(ParameterSetName='ServerName', Mandatory, HelpMessage='The name of the server.')]
         [Alias('ServerName')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Path')]
         [System.String]
         ${Name},
 
-        [Parameter(ParameterSetName='UpdateExpanded', Mandatory, HelpMessage='The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.')]
+        [Parameter(ParameterSetName='ServerName', Mandatory, HelpMessage='The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Path')]
         [System.String]
         ${ResourceGroupName},
 
-        [Parameter(ParameterSetName='UpdateExpanded', HelpMessage='The subscription ID that identifies an Azure subscription.')]
+        [Parameter(ParameterSetName='ServerName', HelpMessage='The subscription ID that identifies an Azure subscription.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Path')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Runtime.DefaultInfo(Script='(Get-AzContext).Subscription.Id')]
         [System.String]
         ${SubscriptionId},
 
-        [Parameter(ParameterSetName='UpdateViaIdentityExpanded', Mandatory, ValueFromPipeline, HelpMessage='Identity Parameter. To construct, see NOTES section for INPUTOBJECT properties and create a hash table.')]
+        [Parameter(ParameterSetName='InputServerObject', Mandatory, ValueFromPipeline, HelpMessage='Identity Parameter. To construct, see NOTES section for INPUTOBJECT properties and create a hash table.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Path')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Models.IMySqlIdentity]
         ${InputObject},
@@ -64,7 +63,7 @@ function Update-AzMySqlServer {
         [Parameter(HelpMessage='The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
         [System.String]
-        ${SkuName},
+        ${Sku},
 
         [Parameter(HelpMessage='The size code, to be interpreted by resource as appropriate.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
@@ -97,7 +96,7 @@ function Update-AzMySqlServer {
         [Parameter(HelpMessage='Max storage allowed for a server.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
         [System.Int32]
-        ${StorageProfileStorageMb},
+        ${StorageProfileStorageInMb},
 
         [Parameter(HelpMessage='Application-specific metadata in the form of key-value pairs.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
@@ -168,6 +167,17 @@ function Update-AzMySqlServer {
                 $null = $PSBoundParameters.Remove('AdministratorLoginPassword')
                 $PSBoundParameters.Add('AdministratorLoginPassword', [System.Runtime.InteropServices.marshal]::PtrToStringAuto($bStr))
             }
+
+            if ($PSBoundParameters.ContainsKey('StorageProfileStorageInMb')) {
+                $PSBoundParameters.Add('StorageProfileStorageMb', $PSBoundParameters['StorageProfileStorageInMb'])
+                $null = $PSBoundParameters.Remove('StorageProfileStorageInMb')
+            }
+
+            if ($PSBoundParameters.ContainsKey('Sku')) {
+                $PSBoundParameters.Add('SkuName', $PSBoundParameters['Sku'])
+                $null = $PSBoundParameters.Remove('Sku')
+            }
+
             Az.MySql.internal\Update-AzMySqlServer @PSBoundParameters
         } catch {
             throw

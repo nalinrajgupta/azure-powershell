@@ -1,21 +1,29 @@
 ---
 external help file:
 Module Name: Az.MySql
-online version: https://docs.microsoft.com/en-us/powershell/module/az.mysql/restore-azmysqlserverwithgeo
+online version: https://docs.microsoft.com/en-us/powershell/module/az.mysql/restore-azmysqlserver
 schema: 2.0.0
 ---
 
-# Restore-AzMySqlServerWithGeo
+# Restore-AzMySqlServer
 
 ## SYNOPSIS
 Restore a server from an existing backup
 
 ## SYNTAX
 
+### GeoRestore (Default)
 ```
-Restore-AzMySqlServerWithGeo -Name <String> -ResourceGroupName <String> -InputObject <IServer>
- [-Location <String>] [-SkuName <String>] [-Tag <Hashtable>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait]
+Restore-AzMySqlServer -Name <String> -ResourceGroupName <String> -InputObject <IServer> -UseGeoRestore
+ [-Location <String>] [-Sku <String>] [-Tag <Hashtable>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait]
  [-Confirm] [-WhatIf] [<CommonParameters>]
+```
+
+### PointInTimeRestore
+```
+Restore-AzMySqlServer -Name <String> -ResourceGroupName <String> -InputObject <IServer>
+ -RestorePointInTime <DateTime> -UsePointInTimeRestore [-Location <String>] [-Sku <String>] [-Tag <Hashtable>]
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -156,7 +164,23 @@ Accept wildcard characters: False
 Dynamic: False
 ```
 
-### -SkuName
+### -RestorePointInTime
+The location the resource resides in.
+
+```yaml
+Type: System.DateTime
+Parameter Sets: PointInTimeRestore
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+Dynamic: False
+```
+
+### -Sku
 The name of the sku, typically, tier + family + cores, e.g.
 B_Gen4_1, GP_Gen5_8.
 
@@ -182,6 +206,38 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+Dynamic: False
+```
+
+### -UseGeoRestore
+Use Geo mode to restore
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: GeoRestore
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+Dynamic: False
+```
+
+### -UsePointInTimeRestore
+Use PointInTime mode to restore
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: PointInTimeRestore
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

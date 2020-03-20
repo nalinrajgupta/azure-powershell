@@ -48,8 +48,9 @@ In this directory, run AutoRest:
 
 ``` yaml
 require:
-  - $(this-folder)/../readme.azure.md
-  - $(repo)/specification/mysql/resource-manager/readme.md
+  - $(this-folder)/../readme.azure.noprofile.md
+input-file:
+  - $(repo)/specification/mysql/resource-manager/Microsoft.DBforMySQL/preview/2017-12-01-preview/mysql.json
 module-version: 0.1.0
 title: MySQL
 subject-prefix: 'MySQL'
@@ -82,7 +83,22 @@ directive:
   - where:
       verb: New$|Update$
       variant: ^(?!.*?Expanded)
-    hide: true
+    remove: true
+  - where:
+      parameter-name: SkuName
+      subject: Server$
+    set:
+      parameter-name: Sku
+  - where:
+      parameter-name: StorageProfileStorageMb
+      subject: Server$
+    set:
+      parameter-name: StorageProfileStorageInMb
+  - where:
+      parameter-name: AdministratorLogin
+      subject: Server$
+    set:
+      parameter-name: AdminUserName
   - where:
       model-name: Server
     set:

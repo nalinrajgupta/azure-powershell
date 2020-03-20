@@ -13,11 +13,10 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
-function Restore-AzMySqlServerWithGeo {
+function Restore-AzMySqlServer_GeoRestore {
     [OutputType([Microsoft.Azure.PowerShell.Cmdlets.MySql.Models.Api20171201Preview.IServer])]
     [CmdletBinding(PositionalBinding=$false, SupportsShouldProcess, ConfirmImpact='Medium')]
     [Microsoft.Azure.PowerShell.Cmdlets.MySql.Description('Restore a server from an existing backup')]
-    [Microsoft.Azure.PowerShell.Cmdlets.MySql.Profile('latest-2019-04-30')]
     param(
         [Parameter(Mandatory, HelpMessage = 'The name of the server.')]
         [Alias('ServerName')]
@@ -43,13 +42,18 @@ function Restore-AzMySqlServerWithGeo {
         [Parameter(HelpMessage = 'The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
         [System.String]
-        ${SkuName},
+        ${Sku},
 
         [Parameter(HelpMessage = 'Application-specific metadata in the form of key-value pairs.')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
         [Microsoft.Azure.PowerShell.Cmdlets.MySql.Runtime.Info(PossibleTypes=([Microsoft.Azure.PowerShell.Cmdlets.MySql.Models.Api20171201Preview.IServerForCreateTags]))]
         [System.Collections.Hashtable]
         ${Tag},
+
+        [Parameter(Mandatory, HelpMessage = 'Use Geo mode to restore')]
+        [Microsoft.Azure.PowerShell.Cmdlets.MySql.Category('Body')]
+        [System.Management.Automation.SwitchParameter]
+        ${UseGeoRestore},
 
         [Parameter(HelpMessage = 'The credentials, account, tenant, and subscription used for communication with Azure.')]
         [Alias('AzureRMContext', 'AzureCredential')]
@@ -124,9 +128,9 @@ function Restore-AzMySqlServerWithGeo {
               $null = $PSBoundParameters.Remove('Location')
           }
 
-          if ($PSBoundParameters.ContainsKey('SkuName')) {
-              $Parameter.SkuName = $PSBoundParameters['SkuName']
-              $null = $PSBoundParameters.Remove('SkuName')
+          if ($PSBoundParameters.ContainsKey('Sku')) {
+              $Parameter.SkuName = $PSBoundParameters['Sku']
+              $null = $PSBoundParameters.Remove('Sku')
           }
 
           if ($PSBoundParameters.ContainsKey('Tag')) {

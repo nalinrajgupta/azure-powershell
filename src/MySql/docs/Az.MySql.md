@@ -1,6 +1,6 @@
 ---
 Module Name: Az.MySql
-Module Guid: b349883d-3af4-4242-ad59-d673b14baac8
+Module Guid: 56ef7f65-d8ad-4166-9c38-26fd224d8d30
 Download Help Link: https://docs.microsoft.com/en-us/powershell/module/az.mysql
 Help Version: 1.0.0.0
 Locale: en-US
@@ -57,9 +57,6 @@ Deletes the virtual network rule with the given name.
 Restarts a server.
 
 ### [Restore-AzMySqlServer](Restore-AzMySqlServer.md)
-Restore a server from an existing backup
-
-### [Restore-AzMySqlServerWithGeo](Restore-AzMySqlServerWithGeo.md)
 Restore a server from an existing backup
 
 ### [Update-AzMySqlConfiguration](Update-AzMySqlConfiguration.md)

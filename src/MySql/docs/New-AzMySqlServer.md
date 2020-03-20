@@ -13,12 +13,12 @@ Creates a new server.
 ## SYNTAX
 
 ```
-New-AzMySqlServer -Name <String> -ResourceGroupName <String> -AdministratorLogin <String>
- -AdministratorLoginPassword <SecureString> -Location <String> -SkuName <String> [-SubscriptionId <String>]
+New-AzMySqlServer -Name <String> -ResourceGroupName <String> -AdministratorLoginPassword <SecureString>
+ -AdminUserName <String> -Location <String> -Sku <String> [-SubscriptionId <String>]
  [-SslEnforcement <SslEnforcementEnum>] [-StorageProfileBackupRetentionDay <Int32>]
  [-StorageProfileGeoRedundantBackup <GeoRedundantBackup>] [-StorageProfileStorageAutogrow <StorageAutogrow>]
- [-StorageProfileStorageMb <Int32>] [-Tag <Hashtable>] [-Version <ServerVersion>] [-DefaultProfile <PSObject>]
- [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
+ [-StorageProfileStorageInMb <Int32>] [-Tag <Hashtable>] [-Version <ServerVersion>]
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,25 +26,31 @@ Creates a new server.
 
 ## EXAMPLES
 
-### Example 1: Create a new MySql server
+### Example 1: {{ Add title here }}
 ```powershell
-PS C:\> $password = 'Pa88word!' | ConvertTo-SecureString -AsPlainText -Force
-PS C:\> New-AzMySqlServer -Name mysql-test -ResourceGroupName mysql_test -Location eastus -AdministratorLogin mysql_test -AdministratorLoginPassword $password -SkuName GP_Gen5_4
+PS C:\> {{ Add code here }}
 
-Name        Location AdministratorLogin Version StorageProfileStorageMb SkuName   SkuSize SkuTier        SslEnforcement
-----        -------- ------------------ ------- ----------------------- -------   ------- -------        --------------
-mysql-test0 eastus   mysql_test         5.7     5120                    GP_Gen5_4         GeneralPurpose Enabled
+{{ Add output here }}
 ```
 
-These cmdlets create a new MySql server.
+{{ Add description here }}
+
+### Example 2: {{ Add title here }}
+```powershell
+PS C:\> {{ Add code here }}
+
+{{ Add output here }}
+```
+
+{{ Add description here }}
 
 ## PARAMETERS
 
-### -AdministratorLogin
+### -AdministratorLoginPassword
 The location the resource resides in.
 
 ```yaml
-Type: System.String
+Type: System.Security.SecureString
 Parameter Sets: (All)
 Aliases:
 
@@ -56,11 +62,11 @@ Accept wildcard characters: False
 Dynamic: False
 ```
 
-### -AdministratorLoginPassword
+### -AdminUserName
 The location the resource resides in.
 
 ```yaml
-Type: System.Security.SecureString
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
@@ -168,7 +174,7 @@ Accept wildcard characters: False
 Dynamic: False
 ```
 
-### -SkuName
+### -Sku
 The name of the sku, typically, tier + family + cores, e.g.
 B_Gen4_1, GP_Gen5_8.
 
@@ -250,7 +256,7 @@ Accept wildcard characters: False
 Dynamic: False
 ```
 
-### -StorageProfileStorageMb
+### -StorageProfileStorageInMb
 Max storage allowed for a server.
 
 ```yaml

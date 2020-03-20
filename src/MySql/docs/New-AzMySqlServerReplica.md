@@ -14,7 +14,7 @@ Creates a new replica from an existing database.
 
 ```
 New-AzMySqlServerReplica -Name <String> -ResourceGroupName <String> -InputObject <IServer>
- [-Location <String>] [-SkuName <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf]
+ [-Location <String>] [-Sku <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf]
  [<CommonParameters>]
 ```
 
@@ -156,7 +156,7 @@ Accept wildcard characters: False
 Dynamic: False
 ```
 
-### -SkuName
+### -Sku
 The name of the sku, typically, tier + family + cores, e.g.
 B_Gen4_1, GP_Gen5_8.
 
